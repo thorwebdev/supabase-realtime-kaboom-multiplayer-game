@@ -4,5 +4,5 @@ CREATE TABLE players (
   user_id uuid references auth.users,
   x decimal default random(),
   y decimal default random(),
-  color int default floor(random() * 4 + 1)::int
+  color int default floor(random() * 3)::int
 );

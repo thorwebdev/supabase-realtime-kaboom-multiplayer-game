@@ -6846,19 +6846,20 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   });
   var SPEED = 320;
   loadSprite("bean", "sprites/bean.png");
-  var COLORS = [RED, GREEN, BLUE, YELLOW];
+  loadSprite("supabean", "sprites/supabean.png");
+  var COLORS = [RED, GREEN, BLUE];
   var player;
   function initPlayer() {
     supa.from("players").insert({ user_id: null }).then(({ data }) => {
       const row = data[0];
       players[row.id] = add([
-        sprite("bean"),
+        sprite("supabean"),
         pos(row.x * width(), row.y * height()),
         area(),
         scale(width() * 5e-4),
-        color(COLORS[row.color - 1]),
+        color(COLORS[row.color]),
         "player",
-        { playerId: row.id }
+        { playerId: row.id, colorId: row.color }
       ]);
       player = players[row.id];
       channel.push("pos", { playerId: row.id, x: row.x / width(), y: row.y / height() });
@@ -6911,9 +6912,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         pos(row.x * width(), row.y * height()),
         area(),
         scale(width() * 5e-4),
-        color(COLORS[row.color - 1]),
+        color(COLORS[row.color]),
         "player",
-        { playerId: row.id }
+        { playerId: row.id, colorId: row.color }
       ]);
     });
     if (window.confirm("Join the game?")) {

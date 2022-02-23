@@ -25,9 +25,10 @@ const SPEED = 320
 
 // load assets
 loadSprite("bean", "sprites/bean.png")
+loadSprite("supabean", "sprites/supabean.png")
 
 const MAX_PLAYERS = 2;
-const COLORS = [RED, GREEN, BLUE, YELLOW]
+const COLORS = [RED, GREEN, BLUE]
 let player;
 
 function initPlayer() {
@@ -36,13 +37,13 @@ function initPlayer() {
     const row = data[0]
     players[row.id] = add([
       // list of components
-      sprite("bean"),
+      sprite("supabean"),
 	  pos(row.x * width(), row.y * height()),
       area(),
       scale(width() * 0.0005), // TODO figure out how to do properly
-      color(COLORS[row.color -1]),
+      color(COLORS[row.color]),
       "player",
-		{ playerId: row.id },
+		{ playerId: row.id, colorId: row.color },
     ])
     player = players[row.id]
     channel.push('pos', { playerId: row.id, x: row.x / width(), y: row.y / height() })
@@ -114,9 +115,9 @@ supa.from('players').select('*').then(({data: rows}) => {
 	  pos(row.x * width(), row.y * height()),
       area(),
       scale(width() * 0.0005), // TODO figure out how to do properly
-      color(COLORS[row.color -1]),
+      color(COLORS[row.color]),
       "player",
-		{ playerId: row.id },
+		{ playerId: row.id, colorId: row.color },
     ])
   })
   // All players loaded, now offer to join the game
