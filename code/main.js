@@ -50,8 +50,17 @@ function initPlayer() {
 
     player.onCollide("player", (cPlayer) => {
       // TODO check for color mechanic based on player ids
-      console.log(cPlayer.playerId)
-      destroy(cPlayer)
+      // Same color all good
+      if (player.colorId === cPlayer.colorId) return
+      // RED eats GREEN (0 eats 1)
+      if (player.colorId === 0 && cPlayer.colorId === 1) destroy(cPlayer)
+      if (cPlayer.colorId === 0 && player.colorId === 1) destroy(player)
+      // GREEN eats BLUE (1 eats 2)
+      if (player.colorId === 1 && cPlayer.colorId === 2) destroy(cPlayer)
+      if (cPlayer.colorId === 1 && player.colorId === 2) destroy(player)
+      // BLUE eats RED (2 eats 0)
+      if (player.colorId === 2 && cPlayer.colorId === 0) destroy(cPlayer)
+      if (cPlayer.colorId === 2 && player.colorId === 0) destroy(player)
       // TODO send collision data to DB
     })
 

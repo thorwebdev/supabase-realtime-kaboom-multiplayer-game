@@ -6864,8 +6864,20 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       player = players[row.id];
       channel.push("pos", { playerId: row.id, x: row.x / width(), y: row.y / height() });
       player.onCollide("player", (cPlayer) => {
-        console.log(cPlayer.playerId);
-        destroy(cPlayer);
+        if (player.colorId === cPlayer.colorId)
+          return;
+        if (player.colorId === 0 && cPlayer.colorId === 1)
+          destroy(cPlayer);
+        if (cPlayer.colorId === 0 && player.colorId === 1)
+          destroy(player);
+        if (player.colorId === 1 && cPlayer.colorId === 2)
+          destroy(cPlayer);
+        if (cPlayer.colorId === 1 && player.colorId === 2)
+          destroy(player);
+        if (player.colorId === 2 && cPlayer.colorId === 0)
+          destroy(cPlayer);
+        if (cPlayer.colorId === 2 && player.colorId === 0)
+          destroy(player);
       });
       onKeyDown("left", () => {
         player.move(-SPEED, 0);
